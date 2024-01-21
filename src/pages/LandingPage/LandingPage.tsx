@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/LandingPage/Header/Header";
 import styles from "./index.module.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BackgroundImage from "../../assets/images/fuji-berg-mit-milchstrasse-in-der-nacht.svg";
+import { searchImages } from "../../api/requests/images.requests";
 
 type LandingPageProps = {
 
 }
 
 const LandingPage:React.FC<LandingPageProps> = () => {
+    const [searchInputText, setSearchInputText] = useState<string>("");
+
+    function onSearchInputChangeText(text: string) {
+        setSearchInputText(text);
+    }
+
+    async function onSearchActionClicked() {
+        const resp = await searchImages(searchInputText);
+        console.log("image search results", resp);
+    }
     return (
         <div
             style={{
@@ -53,8 +64,11 @@ const LandingPage:React.FC<LandingPageProps> = () => {
             </div>
 
             <SearchBar
+                onChangeText={onSearchInputChangeText}
+                onSearchActionClicked={onSearchActionClicked}
                 style={{
                     ...{
+                        width: "59.14%",
                         marginTop: "76.05px"
                     }
                 }}

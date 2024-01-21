@@ -1,14 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchIcon from "../icons/SearchIcon/SearchIcon";
 import styles from "./index.module.css";
 
 type SearchBarProps = {
     style?: React.CSSProperties;
+    onChangeText?: ((text: string) => void);
+    onSearchActionClicked?: (() => void);
 }
 
 const SearchBar:React.FC<SearchBarProps> = ({
     style,
+    onChangeText,
+    onSearchActionClicked,
 }) => {
+    const [searchInputText, setSearchInputText] = useState<string>("");
+    
+    function onSearchInputChange(text: string) {
+        console.log(text);
+        if(onChangeText) {
+            onChangeText(text);
+        }
+        setSearchInputText(text);
+    }
+
+    function onGoClicked() {
+        if(onSearchActionClicked) {
+            onSearchActionClicked();
+        }
+    }
+
     return (
         <div
             style={{
@@ -52,6 +72,10 @@ const SearchBar:React.FC<SearchBarProps> = ({
 
             <input
                 type="text"
+                value={searchInputText}
+                onChange={(e) => {
+                    onSearchInputChange(e.target.value);
+                }}
                 style={{
                     ...{
                         flex: 1,
@@ -75,6 +99,7 @@ const SearchBar:React.FC<SearchBarProps> = ({
             }} ></div> */}
 
             <button
+                onClick={onGoClicked}
                 style={{
                     ...{
                         color: "#fff",
