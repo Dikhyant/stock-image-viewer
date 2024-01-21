@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BackgroundImage from "../../assets/images/fuji-berg-mit-milchstrasse-in-der-nacht.svg";
 import { searchImages } from "../../api/requests/images.requests";
+import SearchTermsContainer from "../../components/LandingPage/SearchTermsContainer/SearchTermsContainer";
 
 type LandingPageProps = {
 
@@ -11,6 +12,7 @@ type LandingPageProps = {
 
 const LandingPage:React.FC<LandingPageProps> = () => {
     const [searchInputText, setSearchInputText] = useState<string>("");
+    const [isSearchResultFound, setIsSearchResultFound] = useState<boolean>(false);
 
     function onSearchInputChangeText(text: string) {
         setSearchInputText(text);
@@ -56,6 +58,9 @@ const LandingPage:React.FC<LandingPageProps> = () => {
                         textAlign: "center",
                         marginTop: "83.72px",
                         
+                    },
+                    ...{
+                        display: isSearchResultFound ? "none" : ""
                     }
                 }}
                 className={`${styles.heroText}`}
@@ -70,6 +75,36 @@ const LandingPage:React.FC<LandingPageProps> = () => {
                     ...{
                         width: "59.14%",
                         marginTop: "76.05px"
+                    }
+                }}
+            />
+
+            <div
+                style={{
+                    ...{
+                        color: "#FFFFFF",
+                        fontSize: "71.25px",
+                        fontWeight: "700",
+                        width: "65.7%",
+                        textAlign: "center",
+                        marginTop: "23.72px",
+                        
+                    },
+                    ...{
+                        display: isSearchResultFound ? "" : "none"
+                    }
+                }}
+            >
+                Results: {searchInputText}
+            </div>
+
+            <SearchTermsContainer
+                style={{
+                    ...{
+                        display: isSearchResultFound ? "" : "none"
+                    },
+                    ...{
+                        marginTop: "23px",
                     }
                 }}
             />

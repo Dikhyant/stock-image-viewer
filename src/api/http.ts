@@ -18,10 +18,6 @@ export const getHeader = async (headers = new Headers(), hasFiles = false): Prom
   return defaultHeaders;
 };
 
-/**
- * Generate HTTP body
- */
-export const getBody = (body?: BodyInit, hasFiles = false) => (hasFiles ? body : JSON.stringify(body));
 
 export class ApiResponseError extends Error {
   code: number = 400;
@@ -70,8 +66,10 @@ const fetchGet = async <T extends ResponseError>(url: string, options?: HTTPOpti
   console.log("GET url ", getURL(url, { baseURL: options?.baseURL }))
   const result = await fetch(getURL(url, { baseURL: options?.baseURL }), {
     method: 'GET',
-    headers: await getHeader(options?.headers),
+    // headers: await getHeader(options?.headers),
   });
+
+  console.log("result", result);
 
   const response: T = await result.json();
   handleError(result.status, response);
