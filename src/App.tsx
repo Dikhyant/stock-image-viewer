@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import LandingPage from './pages/LandingPage/LandingPage';
 
 function App() {
